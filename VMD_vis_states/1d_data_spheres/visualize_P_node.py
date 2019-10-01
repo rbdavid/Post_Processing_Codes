@@ -35,7 +35,7 @@ node_low_centrality_rgb = np.array([0.827,0.827,0.827])     # lightgray
 # ----------------------------------------
 # CREATING/FILLING COLOR DICTIONARIES
 # ----------------------------------------
-node_possible_colorids = range(34,1057)
+node_possible_colorids = list(range(34,1057))
 nNode_colorids = len(node_possible_colorids)
 cmap_positions = np.linspace(0,1,nNode_colorids)
 
@@ -73,7 +73,7 @@ with open('node_selection.txt','w') as f:
     if node_definition.upper() == 'COM':
         substrate_selection = u.select_atoms('protein')
         u_all.translate(-substrate_selection.center_of_mass())
-        nResidues_range = range(substrate_selection.n_residues)
+        nResidues_range = list(range(substrate_selection.n_residues))
         for i in nResidues_range:
             temp = substrate_selection.residues[i].atoms
             selection_list.append(temp)
@@ -89,7 +89,7 @@ with open('node_selection.txt','w') as f:
     # ----------------------------------------
     elif node_definition.upper() == 'ATOMIC':
         substrate_selection = u.select_atoms('protein')
-        nAtoms_range = range(substrate_selection.n_atoms)
+        nAtoms_range = list(range(substrate_selection.n_atoms))
         for i in nAtoms_range:
             temp = substrate_selection.atoms[i]
             selection_list.append(temp)
@@ -99,7 +99,7 @@ with open('node_selection.txt','w') as f:
             com_list.append(temp.pos)
             count += 1
 
-nNodes_range = range(count)
+nNodes_range = list(range(count))
 
 # ----------------------------------------
 # LOADING IN AND ANALYZING THE NODE METRIC FILE

@@ -19,7 +19,6 @@ pdb_file = sys.argv[1]
 node_definition_file = sys.argv[2]
 eigenvector_file = sys.argv[3]
 vis_state_file_name = sys.argv[4]
-vis_structure_file_name = sys.argv[5]
 
 # ----------------------------------------
 # SETTING COLORS
@@ -103,7 +102,7 @@ with open(vis_state_file_name,'w') as W:
     W.write('mol delrep 0 top\nmol rename top vectors\n### setting viewpoints\nset viewpoints([molinfo top]) {{{1 0 0 -52.9233} {0 1 0 -67.1419} {0 0 1 -54.5222} {0 0 0 1}} {{-0.131704 0.180743 -0.974671 0} {-0.578123 -0.812713 -0.0725889 0} {-0.805247 0.55392 0.21153 0} {0 0 0 1}} {{0.0938101 0 0 0} {0 0.0938101 0 0} {0 0 0.0938101 0} {0 0 0 1}} {{1 0 0 0.13} {0 1 0 0.02} {0 0 1 0} {0 0 0 1}}}\nlappend viewplist [molinfo top]\n\n')
     
     ### prepping the molecule and reps
-    W.write('mol new ' + vis_structure_file_name + ' type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all\n')
+    W.write('mol new ' + pdb_file + ' type pdb first 0 last -1 step 1 filebonds 1 autobonds 1 waitfor all\n')
     W.write('mol delrep 0 top\n')
     W.write('mol representation NewCartoon 0.160000 50.000000 4.100000 0\n')
     W.write('mol color Name\n')
@@ -124,6 +123,4 @@ with open(vis_state_file_name,'w') as W:
     W.write('### setting viewpoints\nset viewpoints([molinfo top]) {{{1 0 0 -52.9233} {0 1 0 -67.1419} {0 0 1 -54.5222} {0 0 0 1}} {{-0.131704 0.180743 -0.974671 0} {-0.578123 -0.812713 -0.0725889 0} {-0.805247 0.55392 0.21153 0} {0 0 0 1}} {{0.0938101 0 0 0} {0 0.0938101 0 0} {0 0 0.0938101 0} {0 0 0 1}} {{1 0 0 0.13} {0 1 0 0.02} {0 0 1 0} {0 0 0 1}}}\nlappend viewplist [molinfo top]\nset topmol [molinfo top]\n\nforeach v $viewplist { \n  molinfo $v set {center_matrix rotate_matrix scale_matrix global_matrix} $viewpoints($v)\n}\nforeach v $fixedlist {\n  molinfo $v set fixed 1\n}\nunset viewplist\nunset fixedlist\n')
 
 print('Finished creaing vis-state file', vis_state_file_name)
-
-u_all.write(vis_structure_file_name)
 

@@ -44,7 +44,7 @@ def main():
         selection = u.select_atoms(parameters['selection'])
         positions = np.append(positions,selection.positions,axis=0)
         if parameters['other_cv']:
-            cvs = np.append(cvs,user_defined_cv(selection))
+            cvs = np.append(cvs,calc_cv(selection))
     
     # ----------------------------------------
     # ANALYZE POSITION DATA AND CREATE DX FILES
@@ -72,8 +72,11 @@ config_parser(config_file,parameters)
 
 create_dx = importlib.import_module(parameters['visualization_functions_file'].split('.')[0],package=None).create_dx
 if parameters['other_cv']:
-    if parameters['cv_type'] == "B_FACTOR":
+    if parameters['cv_type'].upper() == "B_FACTOR":
         calc_cv = importlib.import_module(parameters['user_functions_file'].split('.')[0],package=None).bfactors
+    else:
+        print('User needs to read in an accepted "cv_type" or edit the main code (line 74) to accept their new function.')
+        sys.exit()
 
 # ----------------------------------------
 # MAIN

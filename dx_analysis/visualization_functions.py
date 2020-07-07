@@ -44,6 +44,7 @@ def create_dx(node_traj_data,delta,dx_file_name,cv_data=[],cv_file_name=None):
         flattened_cv = binned_cv.flatten()
         flattened_cv /= flattened_space
         where_are_nans = np.isnan(flattened_cv)
+        flattened_cv[where_are_nans] = 0
    
     # outputting dx files, which have finicky formats. 
     if nBins%3 != 0:
